@@ -1,0 +1,5 @@
+a=float()
+b=float()
+c=float()
+s1=str()
+s2=str()
