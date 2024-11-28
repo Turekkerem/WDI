@@ -28,9 +28,6 @@ def wypelnij_pudlo(plansza, wiersz, kolumna):
             plansza[wiersz + i][kolumna + j] = liczby.pop()
 
 def czy_mozna_ustawic(plansza, wiersz, kolumna, liczba):
-    """
-    Sprawdza, czy można wstawić liczbę do danego pola planszy.
-    """
     return (liczba not in plansza[wiersz] and
             liczba not in [plansza[i][kolumna] for i in range(9)] and
             liczba not in [plansza[wiersz//3*3 + i][kolumna//3*3 + j] for i in range(3) for j in range(3)])
@@ -50,11 +47,7 @@ def rozwiaz_plansze(plansza):
                 return True
             plansza[wiersz][kolumna] = 0
     return False
-
 def znajdz_puste_pole(plansza):
-    """
-    Znajduje kolejne puste pole (oznaczone jako 0) na planszy.
-    """
     for i in range(9):
         for j in range(9):
             if plansza[i][j] == 0:
@@ -62,9 +55,6 @@ def znajdz_puste_pole(plansza):
     return None
 
 def usun_pola_z_planszy(plansza, trudnosc=40):
-    """
-    Usuwa wybrane pola z planszy, tworząc łamigłówkę.
-    """
     do_usuniecia = trudnosc
     while do_usuniecia > 0:
         wiersz = random.randint(0, 8)
@@ -74,28 +64,19 @@ def usun_pola_z_planszy(plansza, trudnosc=40):
             do_usuniecia -= 1
 
 def zapisz_plansze_do_pliku(plansza, nazwa_pliku):
-    """
-    Zapisuje planszę Sudoku do pliku w czytelnym formacie.
-    """
     try:
         with open(nazwa_pliku, 'w') as f:
             for wiersz in plansza:
                 f.write(" ".join(str(liczba) if liczba != 0 else "." for liczba in wiersz) + "\n")
-    except IOError as e:
+    except IOError as e: ## wyjatek zwiazany z zapisywaniem pilku
         print(f"Błąd zapisu do pliku {nazwa_pliku}: {e}")
 
 def wyswietl_plansze(plansza):
-    """
-    Wyświetla planszę Sudoku w czytelnym formacie.
-    """
     for wiersz in plansza:
         print(" ".join(str(liczba) if liczba != 0 else "." for liczba in wiersz))
     print()
 
 def wyswietl_ozdobna_plansze(plansza):
-    """
-    Wyświetla planszę Sudoku w ozdobnym formacie z wyraźnymi podziałami na 3x3.
-    """
     print("+" + "---+" * 6)
     for i, wiersz in enumerate(plansza):
         linia = "| " + " | ".join(
@@ -107,10 +88,6 @@ def wyswietl_ozdobna_plansze(plansza):
             print("+" + "---+" * 6)
 
 def generuj_i_zapisz_plansze(liczba, folder_wyjsciowy=None):
-    """
-    Generuje i zapisuje wskazaną liczbę plansz Sudoku do podanego folderu.
-    Jeśli folder nie zostanie podany, używa domyślnego folderu programu.
-    """
     if folder_wyjsciowy is None:
         # Ustaw domyślny folder na lokalizację programu
         folder_wyjsciowy = os.path.dirname(os.path.abspath(__file__))
@@ -127,7 +104,7 @@ def generuj_i_zapisz_plansze(liczba, folder_wyjsciowy=None):
         zapisz_plansze_do_pliku(plansza, nazwa_pliku)
 
 
-if __name__ == "__main__":
+if 1:
     try:
         liczba_plansz = int(input("Podaj liczbę plansz Sudoku do wygenerowania: "))
         folder_wyjsciowy = input("Podaj nazwę folderu do zapisania plansz (lub naciśnij Enter dla domyślnego): ").strip()
